@@ -1,0 +1,25 @@
+{
+  "name": "baitul-jameeh-website",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Official website for Baitul Jameeh General Trading & Contracting Co. — React + Vite.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "gsap": "^3.12.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.0"
+  },
+  "overrides": {
+    "rollup": "npm:@rollup/wasm-node@^4",
+    "esbuild": "npm:esbuild-wasm@^0.21.5"
+  }
+}

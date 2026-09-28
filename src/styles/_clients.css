@@ -1,0 +1,27 @@
+/* ===================== Client logos — moving wall ===================== */
+.clients-marquee{
+  display:flex; flex-direction:column; gap:24px; overflow:hidden; padding:8px 0 16px;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.clients-track{display:flex; gap:24px; width:max-content; animation:clientsScroll 48s linear infinite;}
+.clients-row.reverse .clients-track{animation-direction:reverse; animation-duration:56s;}
+.clients-marquee:hover .clients-track{animation-play-state:paused;}
+@keyframes clientsScroll{to{transform:translateX(calc(-50% - 12px));}}
+
+.client-logo{
+  margin:0; flex:none; width:260px; height:140px; display:grid; place-items:center; padding:20px 30px;
+  background:#fff; border:1px solid var(--line); border-radius:20px;
+  transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, border-color .3s ease;
+}
+.client-logo img{width:100%; height:100%; min-height:0; object-fit:contain;}
+.client-logo:hover{transform:translateY(-6px); border-color:var(--brand-blue); box-shadow:0 20px 40px -24px rgba(59,62,139,.5);}
+
+@media (max-width: 720px){
+  .client-logo{width:190px; height:110px; padding:16px 22px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .clients-track{animation:none;}
+  .clients-marquee{overflow-x:auto;}
+}
+

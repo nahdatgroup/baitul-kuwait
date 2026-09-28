@@ -1,0 +1,132 @@
+/* ===================== Growth chart ===================== */
+.growth-section{background:#fff;}
+.growth-top{display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; margin-bottom:32px;}
+.growth-top .section-head{margin-bottom:0;}
+.growth-top h2{font-size:clamp(1.9rem, 3.4vw, 2.8rem); font-weight:600;}
+.growth-kpi{display:flex; flex-direction:column; align-items:flex-end; text-align:right;}
+.growth-kpi strong{font-family:var(--font-head); font-size:clamp(3rem, 7vw, 5.2rem); font-weight:600; line-height:1; letter-spacing:-0.03em; transition:color .3s ease;}
+.growth-kpi span{color:var(--navy); font-weight:600; margin-top:6px;}
+.growth-kpi em{
+  font-style:normal; font-size:.82rem; font-weight:700; margin-top:10px; padding:5px 12px; border-radius:999px;
+  color:#0E7A5F; background:#E3F7EF;
+}
+
+.growth-layout{display:grid; grid-template-columns:minmax(0, 2.2fr) minmax(260px, 1fr); gap:40px; align-items:center;}
+.growth-card{
+  --metric:var(--brand-blue);
+  position:relative; padding:28px 28px 16px; border-radius:22px; background:var(--paper);
+  border:1px solid var(--line);
+}
+.growth-tabs{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;}
+.growth-tab{
+  font-family:var(--font-body); font-weight:600; font-size:.86rem; padding:.6em 1.2em; border-radius:999px; cursor:pointer;
+  border:1px solid var(--line); background:#fff; color:var(--steel); transition:all .2s ease;
+}
+.growth-tab:hover{border-color:var(--tab); color:var(--tab);}
+.growth-tab.active{background:var(--tab); border-color:var(--tab); color:#fff; box-shadow:0 8px 18px -8px var(--tab);}
+
+.growth-chart{position:relative;}
+.growth-plot{position:relative;}
+.growth-chart svg{width:100%; height:auto; display:block; overflow:visible;}
+.growth-grid line{stroke:#DADCEA; stroke-dasharray:4 6;}
+.growth-grid text, .growth-year{font-family:var(--font-body); font-size:13px; fill:var(--steel-light);}
+.growth-year.on{fill:var(--navy); font-weight:700;}
+
+.growth-bar{
+  fill:var(--metric); opacity:0; transform-box:fill-box; transform-origin:bottom; transform:scaleY(0);
+}
+.growth-card.is-in .growth-bar{animation:barGrow .9s cubic-bezier(.2,.7,.2,1) forwards;}
+@keyframes barGrow{to{transform:scaleY(1); opacity:.12;}}
+
+.growth-area{opacity:0;}
+.growth-card.is-in .growth-area{animation:fadeIn 1s ease .5s forwards;}
+@keyframes fadeIn{to{opacity:1;}}
+
+.growth-line{
+  fill:none; stroke:var(--metric); stroke-width:4; stroke-linecap:round;
+  stroke-dasharray:1; stroke-dashoffset:1;
+}
+.growth-card.is-in .growth-line{animation:drawLine 1.6s cubic-bezier(.4,.1,.2,1) .2s forwards;}
+@keyframes drawLine{to{stroke-dashoffset:0;}}
+
+.growth-dot{
+  fill:#fff; stroke:var(--metric); stroke-width:3; opacity:0;
+  transition:r .2s ease;
+}
+.growth-card.is-in .growth-dot{animation:fadeIn .4s ease forwards;}
+.growth-dot.on{fill:var(--metric); stroke:#fff; stroke-width:3;}
+.growth-guide{stroke:var(--metric); stroke-width:1.5; stroke-dasharray:3 4; opacity:.5;}
+.growth-hit{fill:transparent; cursor:pointer; outline:none;}
+.growth-hit:focus-visible{fill:rgba(59,62,139,.06);}
+
+.growth-tip{
+  position:absolute; transform:translate(-50%, calc(-100% - 18px)); pointer-events:none;
+  background:var(--navy-ink); color:#fff; padding:8px 12px; border-radius:10px; text-align:center;
+  box-shadow:0 10px 24px rgba(15,16,35,.25); transition:left .25s ease, top .25s ease; white-space:nowrap;
+}
+.growth-tip::after{
+  content:""; position:absolute; left:50%; bottom:-5px; width:10px; height:10px; background:inherit;
+  transform:translateX(-50%) rotate(45deg);
+}
+.growth-tip b{display:block; font-family:var(--font-head); font-size:1.1rem;}
+.growth-tip span{font-size:.75rem; color:#A9B4CC;}
+
+.growth-milestones{
+  list-style:none; margin:40px 0 0; padding:0; display:grid; grid-template-columns:repeat(4, 1fr); gap:20px;
+  position:relative;
+}
+.growth-milestones::before{
+  content:""; position:absolute; left:0; right:0; top:9px; height:2px;
+  background:linear-gradient(90deg, var(--brand-blue), var(--signal-red));
+}
+.growth-milestones li{position:relative; padding-top:32px;}
+.growth-milestones li::before{
+  content:""; position:absolute; left:0; top:0; width:20px; height:20px; border-radius:50%;
+  background:#fff; border:4px solid var(--brand-blue);
+}
+.growth-milestones li:nth-child(even)::before{border-color:var(--signal-red);}
+.growth-m-year{font-family:var(--font-head); font-weight:600; font-size:1.4rem; color:var(--navy);}
+.growth-milestones p{font-size:.9rem; margin:4px 0 0;}
+
+@media (max-width: 760px){
+  .growth-kpi{align-items:flex-start; text-align:left;}
+  .growth-card{padding:20px 14px 10px;}
+  .growth-chart{overflow-x:auto; padding-top:64px; margin-top:-40px;}
+  .growth-plot{min-width:620px;}
+  .growth-grid text, .growth-year{font-size:15px;}
+  .growth-milestones{grid-template-columns:1fr 1fr; row-gap:28px;}
+  .growth-milestones::before{display:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .growth-bar{transform:none; opacity:.12;}
+  .growth-line{stroke-dashoffset:0;}
+  .growth-area, .growth-dot{opacity:1;}
+}
+
+/* ===================== Growth — compact chart + vertical milestones ===================== */
+.growth-card{padding:22px 22px 10px;}
+.growth-kpi strong{font-size:clamp(2.2rem, 4vw, 3.2rem);}
+.growth-milestones{grid-template-columns:1fr; gap:0; margin:0; padding-left:34px;}
+.growth-milestones::before{left:9px; right:auto; top:10px; bottom:10px; width:2px; height:auto;
+  background:linear-gradient(180deg, var(--brand-blue), var(--signal-red));}
+.growth-milestones li{padding:0 0 26px 0;}
+.growth-milestones li:last-child{padding-bottom:0;}
+.growth-milestones li::before{left:-34px; top:4px;}
+.growth-m-year{font-size:1.2rem;}
+@media (max-width: 960px){
+  .growth-layout{grid-template-columns:1fr;}
+}
+@media (max-width: 760px){
+  .growth-milestones{grid-template-columns:1fr;}
+  .growth-milestones::before{display:block;}
+}
+.growth-milestones::before{display:none !important;}
+.growth-milestones li::after{
+  content:""; position:absolute; left:-25px; top:24px; bottom:4px; width:2px;
+  background:linear-gradient(180deg, var(--brand-blue), var(--signal-red)); opacity:.5;
+}
+.growth-milestones li:last-child::after{display:none;}
+.growth-top{align-items:flex-end;}
+.growth-kpi{flex-direction:row; align-items:center; gap:14px 18px; flex-wrap:wrap; text-align:left;}
+.growth-kpi span{margin-top:0;}
+.growth-kpi em{margin-top:0;}
